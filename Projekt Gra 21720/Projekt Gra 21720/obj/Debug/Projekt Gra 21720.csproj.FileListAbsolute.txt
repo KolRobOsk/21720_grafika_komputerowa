@@ -1,0 +1,11 @@
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\bin\Debug\Projekt Gra 21720.exe.config
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\bin\Debug\Projekt Gra 21720.exe
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\bin\Debug\Projekt Gra 21720.pdb
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.csproj.AssemblyReference.cache
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.csproj.SuggestedBindingRedirects.cache
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt_Gra_21720.PacMan_21720.resources
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt_Gra_21720.Properties.Resources.resources
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.csproj.GenerateResource.cache
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.csproj.CoreCompileInputs.cache
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.exe
+C:\Users\Robert\source\repos\21720_grafika_komputerowa\Projekt Gra 21720\Projekt Gra 21720\obj\Debug\Projekt Gra 21720.pdb

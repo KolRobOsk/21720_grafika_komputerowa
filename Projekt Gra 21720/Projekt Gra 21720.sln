@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Projekt Gra 21720", "Projekt Gra 21720.csproj", "{CC0BA97C-CD8C-4743-9F69-EA9CF18F4EBF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC0BA97C-CD8C-4743-9F69-EA9CF18F4EBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC0BA97C-CD8C-4743-9F69-EA9CF18F4EBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC0BA97C-CD8C-4743-9F69-EA9CF18F4EBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC0BA97C-CD8C-4743-9F69-EA9CF18F4EBF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30C74BCD-C9EA-4A74-A61D-7B61229F584E}
+	EndGlobalSection
+EndGlobal
