@@ -12,8 +12,10 @@ namespace Projekt_Gra_21720
 {
     public partial class PacMan_21720 : Form
     {
+        Random rnd = new Random();  
         bool goUp, goDown, goLeft, goRight, isGameOver, devoured;
-        int pointz, pacFellaSpeed, redGhostSpeed, yellowGhostSpeed, blueGhostSpeed, pinkGhostSpeed, howManyWalls, coinNumber;
+        int pointz, legality, bannedMoves, pacFellaSpeed, ghostSpeed, coinNumber, directionRed, directionBlue, directionYellow, directionPink, directionCounter;
+        Rectangle[] ghostieAfterMove = new Rectangle [4];
 
         private void PacMan_21720_Load(object sender, EventArgs e)
         {
@@ -35,7 +37,6 @@ namespace Projekt_Gra_21720
             if (goDown == true)
             {
                 PacFella.Location = new Point(PacFella.Location.X, PacFella.Location.Y + pacFellaSpeed);
-
             }
             if (goRight == true)
             {
@@ -46,12 +47,80 @@ namespace Projekt_Gra_21720
                 PacFella.Location = new Point(PacFella.Location.X - pacFellaSpeed, PacFella.Location.Y);
 
             }
+            directionRed = moveGhostie(RedGhostie, directionRed);
+            directionBlue = moveGhostie(BlueGhostie, directionBlue);
+            directionYellow = moveGhostie(YellowGhostie, directionYellow);
+            directionPink = moveGhostie(PinkGhostie, directionPink);
         }
 
         public PacMan_21720()
         {
             InitializeComponent();
             resetGame();
+        }
+        
+        private int moveGhostie(PictureBox ghostie, int direction) 
+        {
+            if (directionCounter == 0)
+            {
+                direction = rnd.Next(4);
+                directionCounter = rnd.Next(3, 30) ;
+            }
+
+            ghostieAfterMove[0] = new Rectangle(ghostie.Location.X, ghostie.Location.Y - ghostSpeed, ghostie.Width, ghostie.Height);   
+            ghostieAfterMove[1] = new Rectangle(ghostie.Location.X - ghostSpeed, ghostie.Location.Y, ghostie.Width, ghostie.Height);
+            ghostieAfterMove[2] = new Rectangle(ghostie.Location.X, ghostie.Location.Y + ghostSpeed, ghostie.Width, ghostie.Height);
+            ghostieAfterMove[3] = new Rectangle(ghostie.Location.X + ghostSpeed, ghostie.Location.Y, ghostie.Width, ghostie.Height);
+
+            bannedMoves = 0;
+            legality = checkIfGhostieLegalMove(ghostieAfterMove, ghostie.Bounds, direction);
+            if (legality != 5)
+            {
+                ghostie.Location = new Point(ghostieAfterMove[legality].X, ghostieAfterMove[legality].Y);
+            }
+
+            directionCounter--;
+            return direction;
+        }
+
+        private int checkIfGhostieLegalMove(Rectangle[] GhostieAfterMove, Rectangle GhostieBeforeMove, int direction)
+        {
+            foreach (Control obj in this.Controls) 
+            {
+                if (obj.Bounds.IntersectsWith(GhostieAfterMove[direction]))
+                {
+                    if (obj.Tag.Equals("wallz"))
+                    {
+                        bannedMoves += direction;
+                        if (direction == 3)
+                        {
+                            direction = 0;
+                        }
+                        else
+                        {
+                            direction += 1;
+                        }
+                    }
+                    if (obj.Tag.Equals("ghostie") && !obj.Bounds.Equals(GhostieBeforeMove))
+                    {
+                        bannedMoves += direction;
+                        if (direction == 3)
+                        {
+                            direction = 0;
+                        }
+                        else
+                        {
+                            direction += 1;
+                        }
+                    }
+                }
+                if (bannedMoves == 10)
+                {
+                    return 5;
+                }
+            }
+            
+            return direction;
         }
 
         private void checkIfLegalMove() {
@@ -65,6 +134,11 @@ namespace Projekt_Gra_21720
                         {
                             pointz += 1;
                             obj.Visible = false;
+                            if (pointz == coinNumber) 
+                            {
+                                isGameOver = true;
+                                devoured = false;
+                            }
                         }
                     }
                     if (obj.Tag.Equals("wallz"))
@@ -120,7 +194,6 @@ namespace Projekt_Gra_21720
         }
 
 
-
         private void KeyIsDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Up)
@@ -171,10 +244,7 @@ namespace Projekt_Gra_21720
         private void resetGame() 
         {
             coinNumber = 0;
-            redGhostSpeed = 5;
-            yellowGhostSpeed = 5;
-            blueGhostSpeed = 5;
-            pinkGhostSpeed = 5;
+            ghostSpeed = 5;
             pacFellaSpeed = 8;
             isGameOver = false;
             BlueGhostie.Location = new Point(449, 281);
@@ -184,7 +254,7 @@ namespace Projekt_Gra_21720
             PacFella.Location = new Point(561, 571);
             devoured = false;
             pointz = 0;
-            howManyWalls = 0;
+            directionCounter = 0;
             foreach (Control obj in this.Controls)
             {
                 if (obj.Tag.Equals("coinz")) 
@@ -198,17 +268,15 @@ namespace Projekt_Gra_21720
         {
             if (devoured == true)
             {
+                WinBox.Visible = true;
                 PacFella.Visible = false;
-                var formPopup = new Form();
-                formPopup.Text = "Wygrałeś!";
-                formPopup.Show(this);
+                WinBox.Text = "Przegrałeś!";
             }
             else {
-                var formPopup = new Form();
-                formPopup.Text = "Przegrałeś!";
-                formPopup.Show(this);
+                WinBox.Visible = true;
+                WinBox.Text = "Wygrałeś!";
             }
-            this.Close();
+            mainTimer.Stop();
         }
 
         private void mainGameTimer(object sender, EventArgs e)
