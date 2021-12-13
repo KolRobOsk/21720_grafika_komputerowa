@@ -13,7 +13,12 @@ namespace Projekt_Gra_21720
     public partial class PacMan_21720 : Form
     {
         bool goUp, goDown, goLeft, goRight, isGameOver, devoured;
-        int pacFellaSpeed, redGhostSpeed, yellowGhostSpeed, blueGhostSpeed, pinkGhostSpeed, howManyWalls, checkX1, checkY1, checkX2, checkY2;
+        int pointz, pacFellaSpeed, redGhostSpeed, yellowGhostSpeed, blueGhostSpeed, pinkGhostSpeed, howManyWalls, coinNumber;
+
+        private void PacMan_21720_Load(object sender, EventArgs e)
+        {
+            
+        }
 
         private void mainTimer_Tick(object sender, EventArgs e)
         {
@@ -21,28 +26,8 @@ namespace Projekt_Gra_21720
             if (isGameOver == true) {
                 gameOver();
             }
-
-            foreach (Control obj in this.Controls) 
-            {
-                if (obj.Bounds.IntersectsWith(PacFella.Bounds))
-                {
-                    if (obj.Tag.Equals("wallz"))
-                    {
-                        if (obj.Location.X <= PacFella.Location.X && obj.Location.X + obj.Size.Width >= PacFella.Location.X + PacFella.Size.Width) 
-                        {
-                            if (obj.Location.Y <= PacFella.Location.Y - pacFellaSpeed && obj.Location.Y + obj.Size.Width >= PacFella.Location.Y + PacFella.Size.Height - pacFellaSpeed)
-                            {
-                                goUp = false;
-                            }
-                            if (obj.Location.Y <= PacFella.Location.Y + pacFellaSpeed && obj.Location.Y + obj.Size.Width >= PacFella.Location.Y + PacFella.Size.Height + pacFellaSpeed)
-                            {
-                                goDown = false;
-                            }
-                        }
-                    }
-                }
-            }
-
+            Pointz.Text = Convert.ToString(pointz);
+            checkIfLegalMove();
             if (goUp == true)
             {
                 PacFella.Location = new Point(PacFella.Location.X, PacFella.Location.Y - pacFellaSpeed);
@@ -67,6 +52,46 @@ namespace Projekt_Gra_21720
         {
             InitializeComponent();
             resetGame();
+        }
+
+        private void checkIfLegalMove() {
+            foreach (Control obj in this.Controls)
+            {
+                if (obj.Bounds.IntersectsWith(PacFella.Bounds))
+                {
+                    if (obj.Tag.Equals("coinz"))
+                    {
+                        if (obj.Visible == true)
+                        {
+                            pointz += 1;
+                            obj.Visible = false;
+                        }
+                    }
+                    if (obj.Tag.Equals("wallz"))
+                    {
+                        Rectangle PacFellaUp = new Rectangle(PacFella.Location.X, PacFella.Location.Y - pacFellaSpeed, PacFella.Size.Width, PacFella.Size.Height);
+                        Rectangle PacFellaDown = new Rectangle(PacFella.Location.X, PacFella.Location.Y + pacFellaSpeed, PacFella.Size.Width, PacFella.Size.Height);
+                        Rectangle PacFellaLeft = new Rectangle(PacFella.Location.X - pacFellaSpeed, PacFella.Location.Y, PacFella.Size.Width, PacFella.Size.Height);
+                        Rectangle PacFellaRight = new Rectangle(PacFella.Location.X + pacFellaSpeed, PacFella.Location.Y, PacFella.Size.Width, PacFella.Size.Height);
+                        if (PacFellaUp.IntersectsWith(obj.Bounds) && PacFellaUp.Y <= obj.Location.Y + obj.Height)
+                        {
+                            goUp = false;
+                        }
+                        if (PacFellaDown.IntersectsWith(obj.Bounds) && PacFellaDown.Y + PacFellaDown.Height >= obj.Location.Y)
+                        {
+                            goDown = false;
+                        }
+                        if (PacFellaLeft.IntersectsWith(obj.Bounds) && PacFellaLeft.X <= obj.Location.X + obj.Width)
+                        {
+                            goLeft = false;
+                        }
+                        if (PacFellaRight.IntersectsWith(obj.Bounds) && PacFellaRight.X + PacFellaRight.Width >= obj.Location.X)
+                        {
+                            goRight = false;
+                        }
+                    }
+                }
+            }
         }
 
         private void checkLoseCondition()
@@ -145,6 +170,7 @@ namespace Projekt_Gra_21720
 
         private void resetGame() 
         {
+            coinNumber = 0;
             redGhostSpeed = 5;
             yellowGhostSpeed = 5;
             blueGhostSpeed = 5;
@@ -157,7 +183,15 @@ namespace Projekt_Gra_21720
             PinkGhostie.Location = new Point(658, 277);
             PacFella.Location = new Point(561, 571);
             devoured = false;
+            pointz = 0;
             howManyWalls = 0;
+            foreach (Control obj in this.Controls)
+            {
+                if (obj.Tag.Equals("coinz")) 
+                {
+                    coinNumber += 1;
+                }
+            }
         }
 
         private void gameOver()
